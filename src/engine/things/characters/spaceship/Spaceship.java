@@ -1,7 +1,13 @@
 package engine.things.characters.spaceship;
 
 import engine.managers.foreground.ForegroundSprite;
+import engine.things.misc.ThrustTrail;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.transform.Rotate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Spaceship extends ForegroundSprite {
@@ -13,6 +19,10 @@ public class Spaceship extends ForegroundSprite {
     private int boostForce = 1000;         //
     private int brakeForce = 1000;         // n pixels per second
     private int turnSpeed = 4;       // n degrees per second
+    
+
+    private ThrustTrail thrustTrail;
+    private ThrustTrail boostTrail;
 
     // int thrustCapacity = 100;
     private float maxVelocity = 200.0f;
@@ -26,17 +36,36 @@ public class Spaceship extends ForegroundSprite {
     private boolean shooting = false;
 
 
+    // Thrust List
+    private static ArrayList<Image> thrustImages = new ArrayList<>(Arrays.asList(
+            new Image("art/spaceships/fire1.png"),
+            new Image("art/spaceships/fire2.png"),
+            new Image("art/spaceships/fire3.png")
+    ));
+
+    // Boost List
+    private static ArrayList<Image> boostImages = new ArrayList<>(Arrays.asList(
+            new Image("art/spaceships/fire4.png"),
+            new Image("art/spaceships/fire5.png"),
+            new Image("art/spaceships/fire6.png")
+    ));
+
     /** Constructor **/
     public Spaceship(Image image, float size,
                      float positionX, float positionY) {
 
         super(image, size, positionX, positionY, 0, 0,  0);
         // this.mass = this.mass * size;
+        
+        thrustTrail = new ThrustTrail(size, positionX, positionY, 0, 0, 0, this.getScreenX(), this.getScreenY(), thrustImages,4);
+        boostTrail = new ThrustTrail(size, positionX, positionY, 0,0,0, this.getScreenX(), this.getScreenY(), boostImages, 4);
     }
+    
 
-    /** Methods **/
+    /** Methods **/    
     @Override
     public void update(float deltaTime) {
+
 
         // check if turning (left/right)
         if (turningLeft || turningRight) {
@@ -48,9 +77,18 @@ public class Spaceship extends ForegroundSprite {
             } else if (turningLeft) {
                 // do turn left
                 setRotation( getRotation() - turnSpeed );
+
+                // turn trails left
+                thrustTrail.setRotation( getRotation() );
+                boostTrail.setRotation( getRotation() );
+
             } else {
                 // do turn right
                 setRotation( getRotation() + turnSpeed );
+
+                // turn trails right
+                thrustTrail.setRotation( getRotation() );
+                boostTrail.setRotation( getRotation() );
             }
 
         }
@@ -165,6 +203,32 @@ public class Spaceship extends ForegroundSprite {
 
         // super update
         super.update(deltaTime);
+
+        // update thrust trail
+        thrustTrail.setVelocity( newVelocity );
+        thrustTrail.setHeading( newHeading );
+        thrustTrail.update(deltaTime);
+
+        // update boost trail
+        boostTrail.setVelocity( newVelocity );
+        boostTrail.setHeading( newHeading );
+        boostTrail.update(deltaTime);
+    }
+    
+    @Override
+    public void render(GraphicsContext gc, float focusX, float focusY)
+    {
+    	// draw ship
+    	super.render(gc, focusX, focusY);
+
+    	// if thrusting then draw the thrust trail
+    	if(thrusting)
+    	    thrustTrail.rRender(gc, focusX, focusY-55, this.getScreenX(), this.getScreenY());
+
+    	// if boosting then draw boost trail
+    	if(boosting)
+    	    boostTrail.rRender(gc, focusX, focusY-55, this.getScreenX(), this.getScreenY());
+
     }
 
     protected void thrust(boolean onOff) {
