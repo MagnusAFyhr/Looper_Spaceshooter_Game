@@ -107,7 +107,8 @@ public class GameManager {
                     playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Render foreground objects
-            foregroundManager.renderForeground(gc,
+            // Pass the player into the foreground render method for asteroid collision
+            foregroundManager.renderForeground(playerManager.player, gc,
                     playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Render player

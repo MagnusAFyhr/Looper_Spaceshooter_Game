@@ -2,6 +2,7 @@ package engine.things.misc;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public class Sprite {
@@ -52,8 +53,6 @@ public class Sprite {
         // calculate screen position
         screenX = px - focusX;
         screenY = py - focusY;
-
-
 
         gc.save(); // saves the current state on stack, including the current transform
         rotate(gc, rotation, screenX, screenY);

@@ -1,6 +1,7 @@
 package engine.managers.foreground;
 
 import engine.managers.background.BackgroundSprite;
+import engine.things.characters.Player;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -88,12 +89,19 @@ public class ForegroundManager {
         }
     }
 
-    public void renderForeground(GraphicsContext gc, float focusX, float focusY) {
+    public void renderForeground(Player p, GraphicsContext gc, float focusX, float focusY) {
         // Render foreground objects
         for(ForegroundSprite object: activeObjects)
         {
             object.setRotation(object.getRotation() + object.getRotateVel());
-            object.render(gc, (float) (focusX - WIDTH / 2), (float)(focusY - HEIGHT / 2));
+
+            // the player object is passed in from the game manager to manage asteroid collision
+            if(!p.collidesWith(object))
+            {
+                // right now the asteroid is only drawn if there is no collision
+                // this line can be moved out of the if statement to keep drawing asteroids
+                object.render(gc, (float) (focusX - WIDTH / 2), (float)(focusY - HEIGHT / 2));
+            }
         }
 
     }
