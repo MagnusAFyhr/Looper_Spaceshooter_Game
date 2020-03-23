@@ -9,6 +9,8 @@ import javafx.scene.transform.Rotate;
 
 public class ThrustTrail extends AnimatedSprite {
 
+	// values to track the ships position
+	// these values allow us to rotate around the ship's axis and not the thrust sprite's
 	private float shipRotateX;
 	private float shipRotateY;
 
@@ -22,6 +24,7 @@ public class ThrustTrail extends AnimatedSprite {
 	}
 
 	/** Methods **/
+	// the method below was override to use the shipRotateX and Y for the rotate function call
 	@Override
 	public void render(GraphicsContext gc, float focusX, float focusY)
 	// Renders the sprite onto the screen
@@ -37,15 +40,21 @@ public class ThrustTrail extends AnimatedSprite {
 		gc.restore(); // back to original state (before rotation)
 	}
 
+	// created to call render and change private variables for rotate
 	public void rRender(GraphicsContext gc, float focusX, float focusY, float shipx, float shipy)
 	{
+		// this is how we render the thrust trail in relation to the ship
+		// these two values store the ships coordinates for use in the rotate function
 		shipRotateX = shipx;
 		shipRotateY = shipy;
+
+		// we call the render method normally
 		render(gc, focusX, focusY);
 	}
 
 
 
+	// these methods are added from the super class so they can be used on the object
 	public void setVelocity(float velocity) { super.setVelocity(velocity); }
 	public void setHeading(float heading) { super.setHeading(heading); }
 	public void setRotation(float rotation) { super.setRotation(rotation); }

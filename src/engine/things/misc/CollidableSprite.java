@@ -33,5 +33,7 @@ public class CollidableSprite extends Sprite {
     /** Getters **/
     // get HitBox
 
+
     /** Setters **/
+    protected void setRotation(float rotation) { super.setRotation(rotation);}
 }

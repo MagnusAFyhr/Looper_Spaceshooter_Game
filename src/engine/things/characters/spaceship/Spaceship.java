@@ -21,6 +21,7 @@ public class Spaceship extends ForegroundSprite {
     private int turnSpeed = 4;       // n degrees per second
     
 
+    // two ThrustTrail animations for the boost and thrust animations
     private ThrustTrail thrustTrail;
     private ThrustTrail boostTrail;
 
@@ -54,9 +55,10 @@ public class Spaceship extends ForegroundSprite {
     public Spaceship(Image image, float size,
                      float positionX, float positionY) {
 
-        super(image, size, positionX, positionY, 0, 0,  0);
+        super(image, size, positionX, positionY, 0, 0,  0, 0);
         // this.mass = this.mass * size;
-        
+
+        // initialize the ThrustTrail objects for the boost and thrust sprite lists
         thrustTrail = new ThrustTrail(size, positionX, positionY, 0, 0, 0, this.getScreenX(), this.getScreenY(), thrustImages,4);
         boostTrail = new ThrustTrail(size, positionX, positionY, 0,0,0, this.getScreenX(), this.getScreenY(), boostImages, 4);
     }
@@ -204,12 +206,12 @@ public class Spaceship extends ForegroundSprite {
         // super update
         super.update(deltaTime);
 
-        // update thrust trail
+        // update thrust trail in relation to the ship
         thrustTrail.setVelocity( newVelocity );
         thrustTrail.setHeading( newHeading );
         thrustTrail.update(deltaTime);
 
-        // update boost trail
+        // update boost trail in relation to the ship
         boostTrail.setVelocity( newVelocity );
         boostTrail.setHeading( newHeading );
         boostTrail.update(deltaTime);
