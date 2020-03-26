@@ -1,6 +1,7 @@
 package engine.things.characters.spaceship;
 
 import engine.managers.foreground.ForegroundSprite;
+import engine.things.misc.AnimatedSprite;
 import engine.things.misc.ThrustTrail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -25,6 +26,9 @@ public class Spaceship extends ForegroundSprite {
     private ThrustTrail thrustTrail;
     private ThrustTrail boostTrail;
 
+    // animated sprite object for lasers
+    private AnimatedSprite laserShoot;
+
     // int thrustCapacity = 100;
     private float maxVelocity = 200.0f;
     // private int maxBoostForce = 10000;
@@ -34,7 +38,9 @@ public class Spaceship extends ForegroundSprite {
     private boolean braking = false;
     private boolean turningRight = false;
     private boolean turningLeft = false;
+
     private boolean shooting = false;
+    private int shootCooldown = 10;
 
 
     // Thrust List
@@ -50,6 +56,17 @@ public class Spaceship extends ForegroundSprite {
             new Image("art/spaceships/fire5.png"),
             new Image("art/spaceships/fire6.png")
     ));
+
+    // Bullet List
+    private static ArrayList<Image> bulletImages = new ArrayList<>(Arrays.asList(
+            new Image("art/spaceships/laserBlue1.png"),
+            new Image("art/spaceships/laserBlue3.png"),
+            new Image("art/spaceships/laserBlue4.png")
+    ));
+
+    private static ArrayList<AnimatedSprite> laserObjects = new ArrayList<>();
+
+
 
     /** Constructor **/
     public Spaceship(Image image, float size,
@@ -139,7 +156,23 @@ public class Spaceship extends ForegroundSprite {
 
         // check if shooting
         if (shooting) {
-            // handle shooting
+            if(shootCooldown >=10) {
+                laserShoot = new AnimatedSprite(bulletImages,
+                        0,
+                        super.getPositionX(),// - super.getScreenX(),
+                        super.getPositionY(),// - super.getScreenY(),
+                        500,
+                        this.getHeading(),
+                        this.getRotation(),
+                        5);
+
+                laserObjects.add(laserShoot);
+            }
+            shootCooldown--;
+            if(shootCooldown <= 0)
+            {
+                shootCooldown = 10;
+            }
 
         }
 
@@ -215,6 +248,13 @@ public class Spaceship extends ForegroundSprite {
         boostTrail.setVelocity( newVelocity );
         boostTrail.setHeading( newHeading );
         boostTrail.update(deltaTime);
+
+
+        // Update the animation step for each laser
+        for(AnimatedSprite object: laserObjects)
+        {
+            object.update(deltaTime);
+        }
     }
     
     @Override
@@ -230,6 +270,11 @@ public class Spaceship extends ForegroundSprite {
     	// if boosting then draw boost trail
     	if(boosting)
     	    boostTrail.rRender(gc, focusX, focusY-55, this.getScreenX(), this.getScreenY());
+
+        for(AnimatedSprite object: laserObjects)
+        {
+            object.render(gc, focusX, focusY);
+        }
 
     }
 

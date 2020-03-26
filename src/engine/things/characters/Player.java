@@ -33,6 +33,9 @@ public class Player extends Spaceship { //, Controllable
             case "D":
                 turnRight(true);
                 return true;
+            case "SPACE":
+                shoot(true);
+                return true;
             case "SHIFT":
                 boost(true);
                 return true;
@@ -56,6 +59,9 @@ public class Player extends Spaceship { //, Controllable
                 return true;
             case "D":
                 turnRight(false);
+                return true;
+            case "SPACE":
+                shoot(false);
                 return true;
             case "SHIFT":
                 boost(false);
