@@ -29,6 +29,9 @@ public class Spaceship extends ForegroundSprite {
     // animated sprite object for lasers
     private AnimatedSprite laserShoot;
 
+    // this forces the user to release the space bar before they can shoot again
+    private boolean prevState = false;
+
     // int thrustCapacity = 100;
     private float maxVelocity = 200.0f;
     // private int maxBoostForce = 10000;
@@ -40,7 +43,6 @@ public class Spaceship extends ForegroundSprite {
     private boolean turningLeft = false;
 
     private boolean shooting = false;
-    private int shootCooldown = 10;
 
 
     // Thrust List
@@ -64,6 +66,7 @@ public class Spaceship extends ForegroundSprite {
             new Image("art/spaceships/laserBlue4.png")
     ));
 
+    // Arraylist of animated sprites which gets a sprite object when the user shoots
     private static ArrayList<AnimatedSprite> laserObjects = new ArrayList<>();
 
 
@@ -154,27 +157,21 @@ public class Spaceship extends ForegroundSprite {
 
         }
 
-        // check if shooting
-        if (shooting) {
-            if(shootCooldown >=10) {
-                laserShoot = new AnimatedSprite(bulletImages,
-                        0,
-                        super.getPositionX(),// - super.getScreenX(),
-                        super.getPositionY(),// - super.getScreenY(),
-                        500,
-                        this.getHeading(),
-                        this.getRotation(),
-                        5);
+        // check if shooting and previous state
+        if (shooting & !prevState) {
+            laserShoot = new AnimatedSprite(bulletImages,
+                    0,
+                    super.getPositionX(),// - super.getScreenX(),
+                    super.getPositionY(),// - super.getScreenY(),
+                    1000,
+                    this.getRotation(),
+                    this.getRotation(),
+                    5);
 
-                laserObjects.add(laserShoot);
-            }
-            shootCooldown--;
-            if(shootCooldown <= 0)
-            {
-                shootCooldown = 10;
-            }
-
+            laserObjects.add(laserShoot);
         }
+        // update prev state
+        prevState = shooting;
 
         // calculate velocity vector
         float dragX = -dragForce * getVelocity() * hX;
@@ -260,6 +257,11 @@ public class Spaceship extends ForegroundSprite {
     @Override
     public void render(GraphicsContext gc, float focusX, float focusY)
     {
+        for(AnimatedSprite object: laserObjects)
+        {
+            object.render(gc, focusX, focusY);
+        }
+
     	// draw ship
     	super.render(gc, focusX, focusY);
 
@@ -271,10 +273,7 @@ public class Spaceship extends ForegroundSprite {
     	if(boosting)
     	    boostTrail.rRender(gc, focusX, focusY-55, this.getScreenX(), this.getScreenY());
 
-        for(AnimatedSprite object: laserObjects)
-        {
-            object.render(gc, focusX, focusY);
-        }
+
 
     }
 
