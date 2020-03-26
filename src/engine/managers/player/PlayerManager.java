@@ -42,7 +42,6 @@ public class PlayerManager {
         float screenX = player.getPositionX() - WIDTH / 2;
         float screenY = player.getPositionY() - HEIGHT / 2;
 
-
         // Render player and player objects
         player.render(gc, screenX, screenY);
     }

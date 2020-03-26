@@ -53,7 +53,7 @@ public class GameManager {
         backgroundManager = new BackgroundManager(screen);
 
         // Initialize foreground manager
-        // foregroundManager = new ForegroundManager(screen);
+        foregroundManager = new ForegroundManager(screen);
 
         // Initialize scoreboard manager
         // scoreboardManager = new ScoreboardManager();
@@ -79,7 +79,8 @@ public class GameManager {
                     playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Update foreground
-            // foregroundManager.updateForeground(currentNanoTime);
+            foregroundManager.updateForeground(playerManager.player, elapsed,
+                    playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Update scoreboard
             // scoreboardManager.updateScoreboard(currentNanoTime);
@@ -106,7 +107,9 @@ public class GameManager {
                     playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Render foreground objects
-            //foregroundManager.renderForeground(gc);
+            // Pass the player into the foreground render method for asteroid collision
+            foregroundManager.renderForeground(gc,
+                    playerManager.player.getPositionX(), playerManager.player.getPositionY());
 
             // Render player
             playerManager.renderPlayer(gc);

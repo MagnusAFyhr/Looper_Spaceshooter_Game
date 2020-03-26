@@ -14,9 +14,9 @@ public class BackgroundManager {
 
     // user Rectangle2D instead for 'updateArea'
 
-    private final int managementRadius = 1000;   // radius, in pixels, around player that the
+    private final int managementRadius = 1500;   // radius, in pixels, around player that the
                                                     // background manager needs to actively load
-    private final int maxObjectCount = 20;      // maximum number of objects in active background
+    private final int maxObjectCount = 30;      // maximum number of objects in active background
     private ArrayList<BackgroundSprite> activeObjects;   // array of active background objects
 
     private int minDepth = 1;

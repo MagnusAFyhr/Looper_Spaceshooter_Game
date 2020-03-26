@@ -2,6 +2,7 @@ package engine.things.misc;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 
 public class Sprite {
@@ -12,6 +13,7 @@ public class Sprite {
     private float imgOffsetX, imgOffsetY;
 
     private float px, py;                  // map position
+    private float screenX, screenY;
 
     private float velocity;
     private float heading;
@@ -49,10 +51,8 @@ public class Sprite {
     // Renders the sprite onto the screen
     {
         // calculate screen position
-        float screenX = px - focusX;
-        float screenY = py - focusY;
-
-        // System.out.println(px+","+py);
+        screenX = px - focusX;
+        screenY = py - focusY;
 
         gc.save(); // saves the current state on stack, including the current transform
         rotate(gc, rotation, screenX, screenY);
@@ -60,7 +60,7 @@ public class Sprite {
         gc.restore(); // back to original state (before rotation)
     }
 
-    private void rotate(GraphicsContext gc, float angle, float px, float py) {
+    protected void rotate(GraphicsContext gc, float angle, float px, float py) {
         Rotate r = new Rotate(angle + 90, px, py);
         gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
     }
@@ -69,6 +69,10 @@ public class Sprite {
     public Image getImage() { return image; }
     public float getPositionX() { return px; }
     public float getPositionY() { return py; }
+    public float getImgOffsetX() { return imgOffsetX; }
+    public float getImgOffsetY() { return imgOffsetY; }
+    public float getScreenX() { return screenX; }
+    public float getScreenY() { return screenY; }
     public float getVelocity() { return velocity; }
     public float getHeading() { return heading; }
     public float getRotation() { return rotation; }
