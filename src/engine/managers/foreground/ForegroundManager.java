@@ -2,6 +2,8 @@ package engine.managers.foreground;
 
 import engine.managers.background.BackgroundSprite;
 import engine.things.characters.Player;
+import engine.things.misc.AnimatedSprite;
+import engine.things.misc.CollidableSprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -53,9 +55,9 @@ public class ForegroundManager {
         WIDTH = screen.getWidth();
         HEIGHT = screen.getHeight();
 
-        spawnRadius = (int) WIDTH;
-        updateRadius = (int) (WIDTH * 1.2);
-        renderRadius = (int) WIDTH;
+        spawnRadius = (int) (WIDTH * 1.2);
+        updateRadius = (int) (WIDTH * 2);
+        renderRadius = (int) (WIDTH * 1.5);
 
         activeObjects = new ArrayList<>();
 
@@ -68,6 +70,17 @@ public class ForegroundManager {
         // Check if any foreground objects should be removed (object outside of management radius)
         for (int i = 0; i < activeObjects.size(); i++) {
             ForegroundSprite object = activeObjects.get(i);
+
+            // check if player bullet hits asteroid
+            ArrayList<AnimatedSprite> lasers = p.getLaserObjects();
+            for (int k = 0; k < lasers.size(); k++)
+            {
+                if (object.collidesWith(lasers.get(k))) {
+                    // TODO : INCREMENT SCORE HERE
+                    activeObjects.set(i, makeForegroundObject(focusX, focusY));
+                    p.removeLaserObject(k);
+                }
+            }
 
             // calculate objects distance to focus point
             float distance = (float) Math.sqrt(Math.pow(focusX - object.getPositionX(), 2) +
@@ -86,11 +99,8 @@ public class ForegroundManager {
                     // check if player hits asteroid
                     if (p.collidesWith(object)) {
                         activeObjects.set(i, makeForegroundObject(focusX, focusY));
-                        // TODO: ADD HEALTH HERE
+                        // TODO: DECREMENT HEALTH HERE
                     }
-
-                    // check if player bullet hits asteroid
-                    // TODO: LASER COLLISIONS
                 }
             }
 

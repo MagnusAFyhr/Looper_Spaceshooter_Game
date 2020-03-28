@@ -169,6 +169,9 @@ public class Spaceship extends ForegroundSprite {
                     5);
 
             laserObjects.add(laserShoot);
+            if (laserObjects.size() > 10) {
+                laserObjects.remove(0);
+            }
         }
         // update prev state
         prevState = shooting;
@@ -301,7 +304,13 @@ public class Spaceship extends ForegroundSprite {
     }
 
     /** Getters **/
+    public ArrayList<AnimatedSprite> getLaserObjects() {
+        return laserObjects;
+    }
 
 
     /** Setters **/
+    public void removeLaserObject(int index) {
+        laserObjects.remove(index);
+    }
 }

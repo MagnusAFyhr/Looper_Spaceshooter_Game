@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
-public class AnimatedSprite extends Sprite{
+public class AnimatedSprite extends CollidableSprite{
 	
 	private Image currImage;
 	private ArrayList<Image> images;
