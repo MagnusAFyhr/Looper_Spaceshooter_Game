@@ -26,12 +26,10 @@ public class ForegroundManager {
     // user Rectangle2D instead for 'updateArea'
     private final int spawnRadius, updateRadius, renderRadius;
 
-    private final int maxObjectCount = 15;      // maximum number of objects in foreground
+    private final int maxObjectCount = 20;      // maximum number of objects in foreground
     private ArrayList<ForegroundSprite> activeObjects;   // array of active foreground objects
 
-    private final int maxItemCount = 300;      // maximum number of objects in foreground
-
-    private float innacuracy = 50;
+    private float innacuracy = 30;
     private float maxVelocity = 500;
     private float minVelocity = 200;
                                                 // background manager needs to actively load

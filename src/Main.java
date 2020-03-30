@@ -45,7 +45,7 @@ public class Main extends Application {
     }
 
 
-    private Scene mainMenu()
+    public Scene mainMenu()
     {
         // Create various buttons for screen
         // "Play" button
@@ -134,7 +134,18 @@ public class Main extends Application {
     public void help()
     {
         System.out.println("Help!");
-        new HelpScreen(theStage);
+
+        // "back" button
+        javafx.scene.control.Button exitButton = new Button();
+        exitButton.setText("Back");
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainMenu();
+            }
+        });
+
+        new HelpScreen(theStage, exitButton);
     }
     // Terminate the program
     public void exit()

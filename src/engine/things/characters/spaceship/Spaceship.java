@@ -24,7 +24,7 @@ public class Spaceship extends ForegroundSprite {
     private int thrustForce = 10000;        // n pixels per second
     private int boostForce = 1000;         //
     private int brakeForce = 1000;         // n pixels per second
-    private int turnSpeed = 4;       // n degrees per second
+    private int turnSpeed = 8;       // n degrees per second
     
 
     // two ThrustTrail animations for the boost and thrust animations
