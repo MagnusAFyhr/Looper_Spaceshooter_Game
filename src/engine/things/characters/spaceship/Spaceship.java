@@ -39,6 +39,8 @@ public class Spaceship extends ForegroundSprite {
 
     // int thrustCapacity = 100;
     private float maxVelocity = 200.0f;
+    private double shotCoolDown = 200;
+    private double lastShot = 0;
     // private int maxBoostForce = 10000;
 
     private boolean thrusting = false;
@@ -106,13 +108,6 @@ public class Spaceship extends ForegroundSprite {
                 5);
 
         laserObjects.add(laserShoot);
-
-
-        /**
-        if (laserObjects.size() > 10) {
-            laserObjects.remove(0);
-        }
-         */
 
     }
     
@@ -267,6 +262,13 @@ public class Spaceship extends ForegroundSprite {
         boostTrail.setHeading( newHeading );
         boostTrail.update(deltaTime);
 
+        if (shooting) {
+            System.out.println(System.currentTimeMillis() - lastShot);
+            if (System.currentTimeMillis() - lastShot > shotCoolDown) {
+                shootbullet();
+                lastShot = System.currentTimeMillis();
+            }
+        }
 
         // Update the animation step for each laser
         for(AnimatedSprite object: laserObjects)

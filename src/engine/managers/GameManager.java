@@ -170,11 +170,6 @@ public class GameManager {
         if (code.equals("I")) {
             playerManager.printStatus();
         }
-        if (code.equals("SPACE"))
-        {
-            playerManager.player.shootbullet();
-        }
-
     }
 
 
