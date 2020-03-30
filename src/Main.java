@@ -104,7 +104,7 @@ public class Main extends Application {
         // Setting the Grid alignment
         gridPane.setAlignment(Pos.CENTER);
 
-        Image bigImage = new Image(Paths.get("src/art/background/Title.png").toUri().toString());
+        Image bigImage = new Image(Paths.get("src/art/background/TitleScreenV3.png").toUri().toString());
         BackgroundImage back = new BackgroundImage(bigImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         gridPane.setBackground(new Background(back));
 
