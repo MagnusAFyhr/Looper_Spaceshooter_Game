@@ -45,7 +45,7 @@ public class HelpScreen {
 
         AnchorPane pane = new AnchorPane();
         pane.getChildren().add(screen);
-        pane.getChildren().add(exitButton);
+        //pane.getChildren().add(exitButton);
 
         root.getChildren().add( pane );
 

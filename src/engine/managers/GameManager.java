@@ -189,7 +189,6 @@ public class GameManager {
         root.getChildren().add( screen );
 
 
-
         // create keyboard input handler
         theScene.addEventHandler(KeyEvent.KEY_PRESSED, (key) ->
                 handleKeyPressed(key.getCode().toString())
