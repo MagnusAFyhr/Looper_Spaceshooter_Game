@@ -72,7 +72,7 @@ public class Spaceship extends ForegroundSprite {
     ));
 
     // Arraylist of animated sprites which gets a sprite object when the user shoots
-    private static ArrayList<AnimatedSprite> laserObjects = new ArrayList<>();
+    public static ArrayList<AnimatedSprite> laserObjects = new ArrayList<>();
 
 
 
@@ -92,6 +92,25 @@ public class Spaceship extends ForegroundSprite {
         // initialize the ThrustTrail objects for the boost and thrust sprite lists
         thrustTrail = new ThrustTrail(size, positionX, positionY, 0, 0, 0, this.getScreenX(), this.getScreenY(), thrustImages,4);
         boostTrail = new ThrustTrail(size, positionX, positionY, 0,0,0, this.getScreenX(), this.getScreenY(), boostImages, 4);
+    }
+
+    public void shootbullet() {
+        shootAudio.play(10.0);
+        laserShoot = new AnimatedSprite(bulletImages,
+                0,
+                super.getPositionX(),
+                super.getPositionY(),
+                1000,
+                this.getRotation(),
+                this.getRotation(),
+                5);
+
+        laserObjects.add(laserShoot);
+
+        if (laserObjects.size() > 10) {
+            laserObjects.remove(0);
+        }
+
     }
     
 
@@ -168,30 +187,7 @@ public class Spaceship extends ForegroundSprite {
 
         }
 
-        // check if shooting and previous state
-        if (shooting & prevState) {
 
-            shootAudio.play(10.0);
-            laserShoot = new AnimatedSprite(bulletImages,
-                    0,
-                    super.getPositionX(),
-                    super.getPositionY(),
-                    1000,
-                    this.getRotation(),
-                    this.getRotation(),
-                    5);
-
-            laserObjects.add(laserShoot);
-
-            prevState = false;
-
-            if (laserObjects.size() > 10) {laserObjects.remove(0);}
-
-        }
-        else if(!shooting)
-        {
-            prevState = true;
-        }
 
 
 

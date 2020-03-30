@@ -37,17 +37,20 @@ public class GameManager {
     private ScoreboardManager scoreboardManager;
     private PerformanceManager performanceManager;
 
+
     private Media bgS;
     private MediaPlayer bgSPlayer;
     MediaView mediaView;
+
 
     /** Constructor **/
     public GameManager(Stage theStage) {
 
         // Initialize mediastuff
-        bgS = new Media(Paths.get("src/SFX/AJTS.mp3").toUri().toString());
+        bgS = new Media(Paths.get("src/SFX/TG.mp3").toUri().toString());
         bgSPlayer = new MediaPlayer(bgS);
         mediaView = new MediaView(bgSPlayer);
+
 
         // Initialize Screen
         Group root = new Group(mediaView);
@@ -167,41 +170,21 @@ public class GameManager {
         if (code.equals("I")) {
             playerManager.printStatus();
         }
+        if (code.equals("SPACE"))
+        {
+            playerManager.player.shootbullet();
+        }
 
     }
 
 
     public void playAgain(Stage theStage) {
 
-        bgSPlayer.stop();
-
-        // Initialize mediastuff
-        bgS = new Media(Paths.get("src/SFX/AJTS.mp3").toUri().toString());
-        bgSPlayer = new MediaPlayer(bgS);
-        mediaView = new MediaView(bgSPlayer);
-
         // Initialize Screen
-        Group root = new Group(mediaView);
+        Group root = new Group();
         theScene = new Scene( root );
         theStage.setScene( theScene );
 
-        /**
-        Button playButton = new Button();
-        playButton.setText("Play");
-        playButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                GameEngine.dead = false;
-            }
-        });
-
-        if(GameEngine.dead == true)
-        {
-            root.getChildren().add( playButton );
-        }
-        else
-        {
-*/
         screen = new Canvas( theStage.getWidth(), theStage.getHeight() );
         root.getChildren().add( screen );
 
@@ -224,18 +207,12 @@ public class GameManager {
         // Initialize foreground manager
         foregroundManager = new ForegroundManager(screen);
 
-        // Initialize scoreboard manager
+        // Don't Initialize scoreboard manager
         // scoreboardManager = new ScoreboardManager();
 
         // Initialize performance manager
         performanceManager = new PerformanceManager();
 
-        bgSPlayer.play();
-
     }
-
-
-
-
 
 }

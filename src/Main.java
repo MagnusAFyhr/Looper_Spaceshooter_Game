@@ -7,8 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import menu.HelpScreen;
+
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -27,7 +31,7 @@ public class Main extends Application {
     public void start(Stage initStage)
     {
         // Define visual properties
-        initStage.setTitle("Final Computer Games Project: Looper!");
+        initStage.setTitle("Looper!");
         initStage.setWidth(WIDTH);
         initStage.setHeight(HEIGHT);
         initStage.setResizable(false);
@@ -43,9 +47,6 @@ public class Main extends Application {
 
     private Scene mainMenu()
     {
-        // Create Game Logo
-
-
         // Create various buttons for screen
         // "Play" button
         Button playButton = new Button();
@@ -67,7 +68,7 @@ public class Main extends Application {
             }
         });
 
-        // "About" button
+        /** "About" button
         Button aboutButton = new Button();
         aboutButton.setText("About");
         aboutButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -75,7 +76,7 @@ public class Main extends Application {
             public void handle(ActionEvent event) {
                 about();
             }
-        });
+        });*/
 
         // "Exit" button
         Button exitButton = new Button();
@@ -103,11 +104,15 @@ public class Main extends Application {
         // Setting the Grid alignment
         gridPane.setAlignment(Pos.CENTER);
 
+        Image bigImage = new Image(Paths.get("src/art/background/Title.png").toUri().toString());
+        BackgroundImage back = new BackgroundImage(bigImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        gridPane.setBackground(new Background(back));
+
         // Add elements to grid pane
         gridPane.add(playButton, 1,0 );
         gridPane.add(helpButton, 1,1 );
-        gridPane.add(aboutButton, 1,2 );
-        gridPane.add(exitButton, 1,3 );
+        //gridPane.add(aboutButton, 1,2 );
+        gridPane.add(exitButton, 1,2 );
 
         // Create a scene object
         Scene menu = new Scene(gridPane);
@@ -126,19 +131,11 @@ public class Main extends Application {
     }
 
     // Launch Instructions Screen
-    public Scene help()
+    public void help()
     {
         System.out.println("Help!");
-        return null;
+        new HelpScreen(theStage);
     }
-
-    // Launch About Screen
-    public Scene about()
-    {
-        System.out.println("About!");
-        return null;
-    }
-
     // Terminate the program
     public void exit()
     {

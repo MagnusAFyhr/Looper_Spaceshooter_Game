@@ -3,6 +3,7 @@ package engine;
 import com.sun.javaws.Main;
 import engine.managers.GameManager;
 import engine.managers.scoreboard.ScoreboardManager;
+import engine.things.characters.spaceship.Spaceship;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -59,6 +60,7 @@ public class GameEngine {
                         ScoreboardManager.highScore = ScoreboardManager.score;
                     }
                     ScoreboardManager.score = 0;
+                    Spaceship.laserObjects.clear();
 
                     gameManager.playAgain(theStage);
                     dead = false;
@@ -74,15 +76,6 @@ public class GameEngine {
 
 
     /** Getters & Setters
-     *
-     * Button playButton = new Button();
-     *                     playButton.setText("Play");
-     *                     playButton.setOnAction(new EventHandler<ActionEvent>() {
-     *                         @Override
-     *                         public void handle(ActionEvent event) {
-     *                             GameEngine.dead = false;
-     *                         }
-     *                     });
      * **/
     public double getScreenWidth() { return WIDTH; }
     public double getScreenHeight() { return HEIGHT; }
