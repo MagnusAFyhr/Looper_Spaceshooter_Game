@@ -5,8 +5,13 @@ import engine.things.misc.AnimatedSprite;
 import engine.things.misc.ThrustTrail;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.transform.Rotate;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -71,12 +76,18 @@ public class Spaceship extends ForegroundSprite {
 
 
 
+    AudioClip shootAudio;
+
+
     /** Constructor **/
     public Spaceship(Image image, float size,
                      float positionX, float positionY) {
 
         super(image, size, positionX, positionY, 0, 0,  0, 0);
         // this.mass = this.mass * size;
+
+
+        shootAudio = new AudioClip(Paths.get("src/SFX/sfx_laser1.mp3").toUri().toString());
 
         // initialize the ThrustTrail objects for the boost and thrust sprite lists
         thrustTrail = new ThrustTrail(size, positionX, positionY, 0, 0, 0, this.getScreenX(), this.getScreenY(), thrustImages,4);
@@ -158,23 +169,31 @@ public class Spaceship extends ForegroundSprite {
         }
 
         // check if shooting and previous state
-        if (shooting & !prevState) {
+        if (shooting & prevState) {
+
+            shootAudio.play(10.0);
             laserShoot = new AnimatedSprite(bulletImages,
                     0,
-                    super.getPositionX(),// - super.getScreenX(),
-                    super.getPositionY(),// - super.getScreenY(),
+                    super.getPositionX(),
+                    super.getPositionY(),
                     1000,
                     this.getRotation(),
                     this.getRotation(),
                     5);
 
             laserObjects.add(laserShoot);
-            if (laserObjects.size() > 10) {
-                laserObjects.remove(0);
-            }
+
+            prevState = false;
+
+            if (laserObjects.size() > 10) {laserObjects.remove(0);}
+
         }
-        // update prev state
-        prevState = shooting;
+        else if(!shooting)
+        {
+            prevState = true;
+        }
+
+
 
         // calculate velocity vector
         float dragX = -dragForce * getVelocity() * hX;

@@ -1,6 +1,15 @@
 package engine.managers.scoreboard;
 
+import engine.managers.foreground.ForegroundSprite;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import engine.things.characters.Player;
+import javafx.scene.text.Font;
+
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,17 +28,26 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class ScoreboardManager {
 
-    public ScoreboardManager() {}
+    private double WIDTH, HEIGHT;
+    public static int score;
+    public static int highScore;
 
-    /** Methods **/
-    public void updateScoreboard(long currentNanoTime) { // will need some object from player
-        // Update foreground objects
 
+    public ScoreboardManager(Canvas screen) {
+        WIDTH = screen.getWidth();
+        HEIGHT = screen.getHeight();
+        score = 0;
+        highScore = 0;
     }
 
-    public void renderScoreboard(GraphicsContext gc) {
-        // Render foreground objects
+    /** Methods **/
 
+
+    public void renderScoreboard(GraphicsContext gc, Player a) {
+        // Render foreground objects
+        gc.setFill(Color.WHITESMOKE);
+        gc.fillText("Score: " + score, a.getScreenX()-(WIDTH/2)+5, a.getScreenY()-(HEIGHT/2)+15);
+        gc.fillText("High Score: " + highScore, a.getScreenX() + (WIDTH/2)-150, a.getScreenY()-(HEIGHT/2)+15);
     }
 
 }

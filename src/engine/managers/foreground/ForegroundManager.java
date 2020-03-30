@@ -1,6 +1,7 @@
 package engine.managers.foreground;
 
 import engine.managers.background.BackgroundSprite;
+import engine.managers.scoreboard.ScoreboardManager;
 import engine.things.characters.Player;
 import engine.things.misc.AnimatedSprite;
 import engine.things.misc.CollidableSprite;
@@ -11,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Random;
+import engine.GameEngine;
 
 public class ForegroundManager {
 
@@ -76,7 +78,7 @@ public class ForegroundManager {
             for (int k = 0; k < lasers.size(); k++)
             {
                 if (object.collidesWith(lasers.get(k))) {
-                    // TODO : INCREMENT SCORE HERE
+                    ScoreboardManager.score += 100;
                     activeObjects.set(i, makeForegroundObject(focusX, focusY));
                     p.removeLaserObject(k);
                 }
@@ -99,7 +101,7 @@ public class ForegroundManager {
                     // check if player hits asteroid
                     if (p.collidesWith(object)) {
                         activeObjects.set(i, makeForegroundObject(focusX, focusY));
-                        // TODO: DECREMENT HEALTH HERE
+                        GameEngine.dead = true;
                     }
                 }
             }
@@ -162,5 +164,9 @@ public class ForegroundManager {
 
         // return random object
         return new ForegroundSprite(rand_image, size, rand_posX, rand_posY, rand_vel, rand_heading, rand_rotate, rotate_vel);
+    }
+
+    public void updateGame() {
+
     }
 }
