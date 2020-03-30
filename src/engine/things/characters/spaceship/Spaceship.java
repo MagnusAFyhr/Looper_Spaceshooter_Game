@@ -97,19 +97,22 @@ public class Spaceship extends ForegroundSprite {
     public void shootbullet() {
         shootAudio.play(10.0);
         laserShoot = new AnimatedSprite(bulletImages,
-                0,
-                super.getPositionX(),
-                super.getPositionY(),
-                1000,
+                10,
+                this.getPositionX(),
+                this.getPositionY(),
+                2000,
                 this.getRotation(),
                 this.getRotation(),
                 5);
 
         laserObjects.add(laserShoot);
 
+
+        /**
         if (laserObjects.size() > 10) {
             laserObjects.remove(0);
         }
+         */
 
     }
     

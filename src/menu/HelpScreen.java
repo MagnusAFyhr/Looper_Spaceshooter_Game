@@ -43,6 +43,7 @@ public class HelpScreen {
         gc.fillRect(0,0,WIDTH,HEIGHT);
         gc.drawImage(helpscreen,0,0);
 
+
         AnchorPane pane = new AnchorPane();
         pane.getChildren().add(screen);
         pane.getChildren().add(exitButton);
